@@ -1,58 +1,84 @@
 <template>
-  <div class="hello">
-    <h1>{{ msg }}</h1>
-    <p>
-      For a guide and recipes on how to configure / customize this project,<br>
-      check out the
-      <a href="https://cli.vuejs.org" target="_blank" rel="noopener">vue-cli documentation</a>.
-    </p>
-    <h3>Installed CLI Plugins</h3>
-    <ul>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-babel" target="_blank" rel="noopener">babel</a></li>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-eslint" target="_blank" rel="noopener">eslint</a></li>
-    </ul>
-    <h3>Essential Links</h3>
-    <ul>
-      <li><a href="https://vuejs.org" target="_blank" rel="noopener">Core Docs</a></li>
-      <li><a href="https://forum.vuejs.org" target="_blank" rel="noopener">Forum</a></li>
-      <li><a href="https://chat.vuejs.org" target="_blank" rel="noopener">Community Chat</a></li>
-      <li><a href="https://twitter.com/vuejs" target="_blank" rel="noopener">Twitter</a></li>
-      <li><a href="https://news.vuejs.org" target="_blank" rel="noopener">News</a></li>
-    </ul>
-    <h3>Ecosystem</h3>
-    <ul>
-      <li><a href="https://router.vuejs.org" target="_blank" rel="noopener">vue-router</a></li>
-      <li><a href="https://vuex.vuejs.org" target="_blank" rel="noopener">vuex</a></li>
-      <li><a href="https://github.com/vuejs/vue-devtools#vue-devtools" target="_blank" rel="noopener">vue-devtools</a></li>
-      <li><a href="https://vue-loader.vuejs.org" target="_blank" rel="noopener">vue-loader</a></li>
-      <li><a href="https://github.com/vuejs/awesome-vue" target="_blank" rel="noopener">awesome-vue</a></li>
-    </ul>
+  <div>
+    <div>
+      用户名:
+      <input type="text" v-model="username" />
+      <span>{{ errors.username && errors.username }}</span>
+    </div>
+    <div>
+      密 码:
+      <input type="text" v-model="password" />
+      <span>{{ errors.password && errors.password }}</span>
+    </div>
+    <div>
+      邮 件:
+      <input type="text" v-model="email" />
+      <span>{{ errors.email && errors.email }}</span>
+    </div>
+    <div>
+      url:
+      <input type="text" v-model="url" />
+      <span>{{ errors.url && errors.url }}</span>
+    </div>
+    <div>
+      手机号:
+      <input type="text" v-model="mobile" />
+      <span>{{ errors.mobile && errors.mobile }}</span>
+    </div>
+    <button @click="handleCheck">校验</button>
   </div>
 </template>
 
 <script>
+/* eslint-disable */
 export default {
-  name: 'HelloWorld',
-  props: {
-    msg: String
+  data() {
+    return {
+      username: "",
+      password: "",
+      email: "",
+      url: "",
+      mobile: ""
+    };
+  },
+  computed: {
+    errors() {
+      // 获取错误
+      return this.$mgValidator.$errors;
+    }
+  },
+  // 添加规则
+  mgValidator: {
+    // username: "required",
+    username: "username(3,5)",
+    password: "password(5,10)",
+    email: "email",
+    url: "url",
+    mobile: "mobile"
+  },
+  methods: {
+    // 开始校验
+    handleCheck() {
+      if (this.$mgValidator.check()) {
+        console.log("合格");
+      } else {
+        console.log("不合格");
+      }
+    }
   }
-}
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h3 {
-  margin: 40px 0 0;
+span {
+  color: red;
 }
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
+
+button {
+  width: 100px;
+  height: 50px;
+  font-size: 30px;
+  margin-top: 10px;
 }
 </style>
