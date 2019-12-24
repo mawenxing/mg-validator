@@ -1,8 +1,6 @@
 # mg-validator
 - 这是应用在vue 2.x 版本的一款轻量级表单验证插件
 
-# Demo & github 地址
-- ....
 
 # Install
 ```js
